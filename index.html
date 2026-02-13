@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مفاجأة عيد الحب ❤️</title>
+
+<style>
+body{
+margin:0;
+font-family:'Cairo',sans-serif;
+text-align:center;
+color:white;
+}
+
+.background{
+position:fixed;
+width:100%;
+height:100%;
+background:url("background.jpg") center center no-repeat;
+background-size:cover;
+z-index:-2;
+}
+
+.overlay{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.75);
+z-index:-1;
+}
+
+.glow{
+text-shadow:0 0 10px #ff4da6,
+0 0 20px #ff0077,
+0 0 40px #ff0077;
+}
+
+.hidden{display:none;}
+
+button{
+padding:12px 25px;
+border-radius:25px;
+border:none;
+background:#ff0077;
+color:white;
+cursor:pointer;
+margin-top:25px;
+}
+
+button:hover{background:#ff4da6;}
+
+input{
+padding:12px;
+border-radius:10px;
+border:none;
+width:80%;
+text-align:center;
+margin-top:15px;
+}
+
+/* دخلة */
+.login-box{
+margin:120px auto;
+width:320px;
+padding:30px;
+border-radius:25px;
+background:rgba(255,255,255,0.08);
+box-shadow:0 0 30px #ff0077;
+}
+
+/* عداد */
+.countdown{
+display:flex;
+justify-content:center;
+gap:15px;
+margin-top:30px;
+}
+
+.box{
+background:rgba(255,255,255,0.15);
+padding:15px;
+border-radius:20px;
+width:90px;
+box-shadow:0 0 20px #ff0077;
+}
+
+/* ألبوم */
+.gallery{
+display:flex;
+align-items:center;
+justify-content:center;
+margin-top:30px;
+}
+
+.gallery img{
+width:260px;
+height:320px;
+border-radius:20px;
+object-fit:cover;
+transition:0.5s;
+}
+
+.zoom{transform:scale(1.08);}
+.arrow{font-size:30px;cursor:pointer;margin:0 15px;}
+
+.extra img{
+width:220px;
+border-radius:15px;
+margin-top:30px;
+}
+
+/* ظرف */
+.envelope-overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+
+.envelope{
+width:350px;
+background:linear-gradient(135deg,#ff4da6,#ff0077);
+border-radius:20px;
+padding:20px;
+animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+from{transform:scale(0.5);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+.envelope video{
+width:100%;
+border-radius:15px;
+}
+
+.envelope-text{
+margin-top:15px;
+line-height:1.9;
+text-align:right;
+white-space:pre-line;
+}
+
+footer{
+margin-top:60px;
+font-size:14px;
+opacity:0.8;
+}
+</style>
+</head>
+<body>
+
+<div class="background"></div>
+<div class="overlay"></div>
+
+<!-- صفحة الباسورد -->
+<div id="loginPage">
+
+<audio id="introSong" autoplay loop>
+<source src="intro.mp3" type="audio/mpeg">
+</audio>
+
+<div class="login-box">
+<h2 class="glow">مريم ❤️</h2>
+<p class="glow">كل سنة وانتي حب عمري وروحي ❤️✨</p>
+
+<input type="password" id="password" placeholder="اكتبي الباسورد يامزتي 💋">
+<br>
+<button onclick="checkPassword()">دخول لبداية مفاجأتك</button>
+</div>
+
+</div>
+
+<!-- الصفحة الرئيسية -->
+<div id="mainPage" class="hidden">
+
+<audio id="mainSong" loop>
+<source src="mainsong.mp3" type="audio/mpeg">
+</audio>
+
+<h1 class="glow">حكايتنا ✨❤️</h1>
+
+<div class="countdown">
+<div class="box"><span>572</span><p>يوم</p></div>
+<div class="box"><span>13</span><p>ساعة</p></div>
+<div class="box"><span>823</span><p>دقيقة</p></div>
+</div>
+
+<button onclick="playMain()">تشغيل الأغنية الأساسية 🎵</button>
+
+<div class="gallery">
+<span class="arrow" onclick="prevImage()">«</span>
+<img id="galleryImage">
+<span class="arrow" onclick="nextImage()">»</span>
+</div>
+
+<audio id="albumSound"></audio>
+
+<div class="extra">
+<img src="extra1.jpg">
+<p class="glow">وجودك في حياتي هو أجمل صدفة حصلتلي ❤️</p>
+</div>
+
+<div class="extra">
+<img src="extra2.jpg">
+<p class="glow">انتي الضحكة اللي بتخليني أعيش والقلب اللي بدق عشانه ✨</p>
+</div>
+
+<button onclick="openMessage()">دوسي متستعجليش 😂♥️</button>
+
+<button style="display:block;margin:40px auto;" onclick="openVideo()">
+عيد حب سعيد 🎁💞
+</button>
+
+<div id="envelopeContainer" class="hidden"></div>
+
+<footer>جميع الحقوق محفوظة من فواز</footer>
+
+</div>
+
+<script>
+
+function checkPassword(){
+let pass=document.getElementById("password").value.trim();
+if(pass==="2422010"){
+document.getElementById("introSong").pause();
+document.getElementById("loginPage").style.display="none";
+document.getElementById("mainPage").style.display="block";
+}else{
+alert("الباسورد غلط 💋");
+}
+}
+
+/* ألبوم */
+let images=[
+{img:"img1.jpg",sound:"sound1.mp3"},
+{img:"img2.jpg",sound:"sound2.mp3"},
+{img:"img3.jpg",sound:"sound3.mp3"},
+{img:"img4.jpg",sound:"sound4.mp3"},
+{img:"img5.jpg",sound:"sound5.mp3"},
+{img:"img6.jpg",sound:"sound6.mp3"}
+];
+
+let currentIndex=0;
+document.getElementById("galleryImage").src=images[0].img;
+
+function showImage(){
+let image=document.getElementById("galleryImage");
+let album=document.getElementById("albumSound");
+let main=document.getElementById("mainSong");
+
+image.src=images[currentIndex].img;
+image.classList.add("zoom");
+setTimeout(()=>{image.classList.remove("zoom");},500);
+
+main.pause();
+album.src=images[currentIndex].sound;
+album.play();
+}
+
+function nextImage(){currentIndex=(currentIndex+1)%images.length;showImage();}
+function prevImage(){currentIndex=(currentIndex-1+images.length)%images.length;showImage();}
+
+function playMain(){
+document.getElementById("albumSound").pause();
+document.getElementById("mainSong").play();
+}
+
+/* ظرف رسالة قصيرة */
+function openMessage(){
+let c=document.getElementById("envelopeContainer");
+c.classList.remove("hidden");
+c.innerHTML=`
+<div class="envelope-overlay">
+<div class="envelope glow">
+<div class="envelope-text">
+انتي أجمل عيد حب في حياتي ❤️✨
+</div>
+<button onclick="closeEnvelope()">إغلاق</button>
+</div>
+</div>`;
+}
+
+/* ظرف فيديو + كتابة كاملة */
+function openVideo(){
+let c=document.getElementById("envelopeContainer");
+c.classList.remove("hidden");
+c.innerHTML=`
+<div class="envelope-overlay">
+<div class="envelope glow">
+<video controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+<div id="typedText" class="envelope-text"></div>
+<button onclick="closeEnvelope()">إغلاق</button>
+</div>
+</div>`;
+typeText();
+}
+
+function closeEnvelope(){
+let c=document.getElementById("envelopeContainer");
+c.classList.add("hidden");
+c.innerHTML="";
+}
+
+function typeText(){
+let text = `احب اقولك النهارده بتاريخ 2026/2/14 📆
+كل عيد وانت عيدي ينور عيني 🥹💋
+وتكوني مراتي وفي بيت واحد يارب 😍💋 كل يوم واحنا مع بعض يروحي ومافيش حاجه تفرقنا 💍🫶🏻
+انك اغلا حاجه عندي ف الدنيا 🌎👌🏻 أقسم بالله ولا في حد يملأ مكانك ف عيني ولا قلبي يست البنات 🫵🏻😍 واتخانقنا كتير مع بعض وسبنا بعض بس رجعنا لبعض واحسن 🌚😍
+ومهما كلمتك بحب عمري مقدر اوصف حبي ليكي عشان الحب أفعال 😉🥹 وماتزعليش مني في يوم علي حاجه أنا عملتها ♥️♥️🤩 عشان أنا عمري مزعلت منك يست البنات 💍🫵🏻 وبحبك يا ام العيال 🫵🏻😍
+وعايزك تعرفي انك كدا كدا حاجه اساسيه في حياتي ويومي مش بيكمل غير بيكي 🥹🤩 وبحبك يا الغلا من حياتي 💋💋💋
+عشان انت كيوتههه وقمر يفراوليه يجميل انت 🌚🫵🏻🌎 وكل سنه وانت طيبه يروح قلبي 🌚❤️`;
+
+let i=0;
+let target=document.getElementById("typedText");
+target.innerHTML="";
+
+function typing(){
+if(i<text.length){
+target.innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,25);
+}
+}
+typing();
+}
+
+</script>
+
+</body>
+</html>
